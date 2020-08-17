@@ -10,9 +10,15 @@ import UIKit
 
 class ListingViewController: UIViewController {
 
+    override func loadView() {
+        view = ListingView()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        let apiController = ApiController()
+        apiController.getPokemon(withID: 1)
         // Do any additional setup after loading the view.
     }
 
