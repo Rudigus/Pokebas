@@ -11,8 +11,8 @@ import Foundation
 class ApiController {
 
     func getPokemons(count: Int) {}
-
-    func getPokemon(withID id: Int) {
+g
+    func getPokemon(withID id: Int, completion: @escaping (Pokemon) -> Void) {
         // Building the request
         let pokemonURL = URL(string: "https://pokeapi.co/api/v2/pokemon/\(id)/")!
         var pokemonRequest = URLRequest(url: pokemonURL)
@@ -24,8 +24,8 @@ class ApiController {
             //print(error)
             guard let data = data else { return }
             do {
-                let apiResponse = try JSONDecoder().decode(Pokemon.self, from: data)
-                print(apiResponse)
+                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                completion(pokemon)
             } catch {
                 print(error)
             }

@@ -47,4 +47,5 @@ identifier_name:
     - hp
     - ice
     - bug
+    - url
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji, sonarqube, markdown)

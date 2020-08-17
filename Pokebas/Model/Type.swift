@@ -34,7 +34,8 @@ struct TypeStruct {
 
 }
 
-extension TypeStruct: Decodable {
+extension TypeStruct: Codable {
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         slot = try values.decode(Int.self, forKey: .slot)
@@ -42,4 +43,13 @@ extension TypeStruct: Decodable {
         let typeInfo = try values.nestedContainer(keyedBy: TypeInfo.self, forKey: .typeInfo)
         name = try typeInfo.decode(TypeEnum.self, forKey: .name)
     }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(slot, forKey: .slot)
+
+        var typeInfo = container.nestedContainer(keyedBy: TypeInfo.self, forKey: .typeInfo)
+        try typeInfo.encode(name, forKey: .name)
+    }
+
 }

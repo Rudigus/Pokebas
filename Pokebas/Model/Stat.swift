@@ -30,9 +30,11 @@ struct StatStruct {
     enum StatInfo: String, CodingKey {
         case name
     }
+
 }
 
-extension StatStruct: Decodable {
+extension StatStruct: Codable {
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         baseValue = try values.decode(Int.self, forKey: .baseValue)
@@ -40,4 +42,13 @@ extension StatStruct: Decodable {
         let statInfo = try values.nestedContainer(keyedBy: StatInfo.self, forKey: .statInfo)
         name = try statInfo.decode(StatEnum.self, forKey: .name)
     }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(baseValue, forKey: .baseValue)
+
+        var statInfo = container.nestedContainer(keyedBy: StatInfo.self, forKey: .statInfo)
+        try statInfo.encode(name, forKey: .name)
+    }
+
 }

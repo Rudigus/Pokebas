@@ -18,7 +18,13 @@ class ListingViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         let apiController = ApiController()
-        apiController.getPokemon(withID: 1)
+        apiController.getPokemon(withID: 2) { pokemon in
+            print(pokemon)
+            let pokebase = Pokebase()
+            var pokemons = pokebase.load()
+            pokemons.append(pokemon)
+            pokebase.save(pokemons)
+        }
         // Do any additional setup after loading the view.
     }
 
