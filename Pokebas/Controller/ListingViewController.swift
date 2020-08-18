@@ -11,21 +11,28 @@ import UIKit
 class ListingViewController: UIViewController {
 
     override func loadView() {
-        view = ListingView()
+        self.view = ListingView()
+        view.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
-        let apiController = ApiController()
-        apiController.getPokemon(withID: 2) { pokemon in
+        //let apiController = ApiController()
+        /*apiController.getPokemon(withID: 2) { pokemon in
             print(pokemon)
             let pokebase = Pokebase()
             var pokemons = pokebase.load()
             pokemons.append(pokemon)
             pokebase.save(pokemons)
-        }
-        // Do any additional setup after loading the view.
+        }*/
+        /*apiController.getPokemon(withURL: URL(string: "https://pokeapi.co/api/v2/pokemon/7/")!) { pokemon in
+            print(pokemon)
+        }*/
+        /*apiController.getPokemons(count: 3) { pokemons in
+            pokemons.forEach {
+                print($0)
+            }
+        }*/
     }
 
 }

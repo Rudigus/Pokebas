@@ -15,7 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ListingViewController() // Your initial view controller.
+
+        let listingVC = ListingViewController()
+        listingVC.title = "Pokebas"
+
+        let navigationController = UINavigationController(rootViewController: listingVC)
+        navigationController.navigationBar.prefersLargeTitles = true
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
     }
