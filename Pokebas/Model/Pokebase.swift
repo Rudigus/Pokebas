@@ -44,4 +44,15 @@ class Pokebase {
         }
     }
 
+//    func load(withID pokemonID: Int) -> Pokemon? {
+//        do {
+//            let jsonData = try Data(contentsOf: pokebaseURL)
+//            let pokemons = try JSONDecoder().decode([Int: Pokemon].self, from: jsonData)
+//            return pokemons[pokemonID]
+//        } catch {
+//            print("It was not possible to load the pokemon.")
+//            return nil
+//        }
+//    }
+
 }

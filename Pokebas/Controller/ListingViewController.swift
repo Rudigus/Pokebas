@@ -21,6 +21,13 @@ class ListingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+//        let apiController = ApiController()
+//        apiController.getPokemon(withURL: URL(string: "https://pokeapi.co/api/v2/pokemon/39/")!) { pokemon in
+//            print(pokemon)
+//        }
+//        apiController.getPokemon(withID: 39) { pokemon in
+//            print(pokemon)
+//        }
         //_ = Pokebase()
     }
 
@@ -36,14 +43,17 @@ class ListingViewController: UIViewController {
         let pokebase = Pokebase(pokemonID: pokemonID)
         let pokemons = pokebase.load()
         if let pokemon = pokemons[pokemonID] {
+            print("omg")
             completion(pokemon)
         } else {
             print("fail")
+            let apiController = ApiController()
+            apiController.getPokemons(pokemonID: pokemonID) { pokemons in
+                print("yeah")
+                pokebase.save(pokemons)
+            }
+
         }
-        /*let apiController = ApiController()
-        apiController.getPokemon(withID: pokemonID) { pokemon in
-            completion(pokemon)
-        }*/
     }
 
 }

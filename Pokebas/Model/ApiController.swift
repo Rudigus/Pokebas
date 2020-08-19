@@ -10,9 +10,11 @@ import Foundation
 
 class ApiController {
 
-    func getPokemons(count: Int, completion: @escaping ([Int: Pokemon]) -> Void) {
+    func getPokemons(pokemonID: Int, completion: @escaping ([Int: Pokemon]) -> Void) {
+
+        let limit = 20
         // Building the request
-        let pokemonsURL = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=\(count)")!
+        let pokemonsURL = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=20&offset=\(pokemonID/limit * limit)")!
         var pokemonsRequest = URLRequest(url: pokemonsURL)
         pokemonsRequest.httpMethod = "GET"
         // Requesting
@@ -24,12 +26,13 @@ class ApiController {
             do {
                 let pokemonLookup = try JSONDecoder().decode(PokemonLookup.self, from: data)
                 var pokemons: [Int: Pokemon] = [:]
-                for pokemon in pokemonLookup.results {
-                    self.getPokemon(withURL: pokemon.url) { pokemon in
+                for pokemonEntry in pokemonLookup.results {
+                    //print(pokemonEntry.url)
+                    self.getPokemon(withURL: pokemonEntry.url) { pokemon in
                         pokemons[pokemon.id] = pokemon
                     }
                 }
-                while(pokemons.count < count) { }
+                while(pokemons.count < limit) { }
                 completion(pokemons)
             } catch {
                 print(error)
