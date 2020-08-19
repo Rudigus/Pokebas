@@ -12,17 +12,18 @@ class Pokebase {
 
     let pokebaseURL: URL
 
-    init(filename: String = "pokebase") {
+    init(pokemonID: Int) {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        var fileURL = url.appendingPathComponent(filename)
+        var fileURL = url.appendingPathComponent("pokebase_\(pokemonID/21 + 1)")
         fileURL = fileURL.appendingPathExtension("json")
+        //print(fileURL)
         self.pokebaseURL = fileURL
         if !FileManager.default.fileExists(atPath: fileURL.path) {
-            save([])
+            save([:])
         }
     }
 
-    func save(_ pokemons: [Pokemon]) {
+    func save(_ pokemons: [Int: Pokemon]) {
         do {
             let jsonData = try JSONEncoder().encode(pokemons)
             try jsonData.write(to: pokebaseURL)
@@ -31,11 +32,11 @@ class Pokebase {
         }
     }
 
-    func load() -> [Pokemon] {
-        var pokemons: [Pokemon] = []
+    func load() -> [Int: Pokemon] {
+        var pokemons: [Int: Pokemon] = [:]
         do {
             let jsonData = try Data(contentsOf: pokebaseURL)
-            pokemons = try JSONDecoder().decode([Pokemon].self, from: jsonData)
+            pokemons = try JSONDecoder().decode([Int: Pokemon].self, from: jsonData)
             return pokemons
         } catch {
             print("It was not possible to load the pokemon listing.")

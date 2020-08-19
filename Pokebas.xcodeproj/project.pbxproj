@@ -24,6 +24,7 @@
 		57A7A2B924EAB7C00054DB86 /* ListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2B824EAB7C00054DB86 /* ListingView.swift */; };
 		57A7A2BB24EAB7EE0054DB86 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2BA24EAB7EE0054DB86 /* DetailView.swift */; };
 		57A7A2BD24EAB7FA0054DB86 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2BC24EAB7FA0054DB86 /* SettingsView.swift */; };
+		57B55CA224ED5F2400BFDBB0 /* PokemonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		57A7A2B824EAB7C00054DB86 /* ListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingView.swift; sourceTree = "<group>"; };
 		57A7A2BA24EAB7EE0054DB86 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		57A7A2BC24EAB7FA0054DB86 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				57A7A2B824EAB7C00054DB86 /* ListingView.swift */,
 				57A7A2BA24EAB7EE0054DB86 /* DetailView.swift */,
 				57A7A2BC24EAB7FA0054DB86 /* SettingsView.swift */,
+				57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				574F7F4524EAC8E1009D3E82 /* ApiController.swift in Sources */,
 				574F7F4B24EB10AD009D3E82 /* Pokebase.swift in Sources */,
 				574F7F4324EAC28C009D3E82 /* SettingsViewController.swift in Sources */,
+				57B55CA224ED5F2400BFDBB0 /* PokemonCell.swift in Sources */,
 				57A7A2BB24EAB7EE0054DB86 /* DetailView.swift in Sources */,
 				574F7F4724EAF948009D3E82 /* Type.swift in Sources */,
 				57A7A2B924EAB7C00054DB86 /* ListingView.swift in Sources */,

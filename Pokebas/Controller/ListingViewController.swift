@@ -10,29 +10,62 @@ import UIKit
 
 class ListingViewController: UIViewController {
 
+    var listingView: ListingView! = nil
+
     override func loadView() {
-        self.view = ListingView()
-        view.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
+        listingView = ListingView()
+        view = listingView
+        listingView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let apiController = ApiController()
-        /*apiController.getPokemon(withID: 2) { pokemon in
+        setupCollectionView()
+        //_ = Pokebase()
+    }
+
+    func setupCollectionView() {
+        listingView.pokemonListing.register(PokemonCell.self, forCellWithReuseIdentifier: "PokemonCell")
+        listingView.pokemonListing.dataSource = self
+        listingView.pokemonListing.delegate = self
+    }
+
+    func getPokemon(forItemAt indexPath: IndexPath, completion: @escaping (Pokemon) -> Void) {
+        let pokemonID = indexPath[0] * numberOfSections(in: listingView.pokemonListing) + indexPath[1] + 1
+        //print(id)
+        let pokebase = Pokebase(pokemonID: pokemonID)
+        let pokemons = pokebase.load()
+        if let pokemon = pokemons[pokemonID] {
+            completion(pokemon)
+        } else {
+            print("fail")
+        }
+        /*let apiController = ApiController()
+        apiController.getPokemon(withID: pokemonID) { pokemon in
+            completion(pokemon)
+        }*/
+    }
+
+}
+
+extension ListingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //print(indexPath)
+        let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
+        getPokemon(forItemAt: indexPath) { pokemon in
             print(pokemon)
-            let pokebase = Pokebase()
-            var pokemons = pokebase.load()
-            pokemons.append(pokemon)
-            pokebase.save(pokemons)
-        }*/
-        /*apiController.getPokemon(withURL: URL(string: "https://pokeapi.co/api/v2/pokemon/7/")!) { pokemon in
-            print(pokemon)
-        }*/
-        /*apiController.getPokemons(count: 3) { pokemons in
-            pokemons.forEach {
-                print($0)
-            }
-        }*/
+        }
+        cell.backgroundColor = UIColor.systemRed
+        return cell
     }
 
 }
