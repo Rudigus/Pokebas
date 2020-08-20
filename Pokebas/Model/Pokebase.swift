@@ -12,9 +12,9 @@ class Pokebase {
 
     let pokebaseURL: URL
 
-    init(pokemonID: Int) {
+    init(pageNumber: Int) {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        var fileURL = url.appendingPathComponent("pokebase_\(pokemonID/21 + 1)")
+        var fileURL = url.appendingPathComponent("pokebase_\(pageNumber)")
         fileURL = fileURL.appendingPathExtension("json")
         //print(fileURL)
         self.pokebaseURL = fileURL

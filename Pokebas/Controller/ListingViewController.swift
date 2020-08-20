@@ -11,6 +11,20 @@ import UIKit
 class ListingViewController: UIViewController {
 
     var listingView: ListingView! = nil
+    var dataArray: [Pokemon] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.listingView.pokemonListing.reloadData()
+            }
+        }
+    }
+    var currentPage: Int = 1 {
+        didSet {
+            pokemonRequest { pokeArray in
+                self.dataArray = pokeArray
+            }
+        }
+    }
 
     override func loadView() {
         listingView = ListingView()
@@ -21,14 +35,9 @@ class ListingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-//        let apiController = ApiController()
-//        apiController.getPokemon(withURL: URL(string: "https://pokeapi.co/api/v2/pokemon/39/")!) { pokemon in
-//            print(pokemon)
-//        }
-//        apiController.getPokemon(withID: 39) { pokemon in
-//            print(pokemon)
-//        }
-        //_ = Pokebase()
+        pokemonRequest { pokeArray in
+            self.dataArray = pokeArray
+        }
     }
 
     func setupCollectionView() {
@@ -37,43 +46,42 @@ class ListingViewController: UIViewController {
         listingView.pokemonListing.delegate = self
     }
 
-    func getPokemon(forItemAt indexPath: IndexPath, completion: @escaping (Pokemon) -> Void) {
-        let pokemonID = indexPath[0] * numberOfSections(in: listingView.pokemonListing) + indexPath[1] + 1
-        //print(id)
-        let pokebase = Pokebase(pokemonID: pokemonID)
-        let pokemons = pokebase.load()
-        if let pokemon = pokemons[pokemonID] {
-            print("omg")
-            completion(pokemon)
-        } else {
-            print("fail")
-            let apiController = ApiController()
-            apiController.getPokemons(pokemonID: pokemonID) { pokemons in
-                print("yeah")
-                pokebase.save(pokemons)
-            }
+    func pokemonRequest(completion: @escaping ([Pokemon]) -> Void) {
 
+        var pokeArray: [Pokemon] = []
+
+        let pokebase = Pokebase(pageNumber: currentPage)
+        let pokeDict = pokebase.load()
+        if !pokeDict.isEmpty {
+            pokeArray = Array(pokeDict.values)
+            completion(pokeArray)
+        } else {
+            let apiController = ApiController()
+            apiController.getPokemons(offset: (currentPage - 1) * 20) { pokeDict in
+                pokebase.save(pokeDict)
+                completion(Array(pokeDict.values))
+            }
         }
     }
-
 }
 
 extension ListingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return dataArray.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //print(indexPath)
+        print(dataArray[indexPath.row])
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
-        getPokemon(forItemAt: indexPath) { pokemon in
-            print(pokemon)
-        }
+        cell.imgURL = dataArray[indexPath.row].listingImageURL
         cell.backgroundColor = UIColor.systemRed
         return cell
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Pokemon {
     let id: Int
