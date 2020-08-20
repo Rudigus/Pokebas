@@ -53,15 +53,24 @@ class ListingViewController: UIViewController {
         let pokebase = Pokebase(pageNumber: currentPage)
         let pokeDict = pokebase.load()
         if !pokeDict.isEmpty {
-            pokeArray = Array(pokeDict.values)
+            pokeArray = getPokeArray(from: pokeDict)
             completion(pokeArray)
         } else {
             let apiController = ApiController()
             apiController.getPokemons(offset: (currentPage - 1) * 20) { pokeDict in
                 pokebase.save(pokeDict)
-                completion(Array(pokeDict.values))
+                pokeArray = self.getPokeArray(from: pokeDict)
+                completion(pokeArray)
             }
         }
+    }
+
+    func getPokeArray(from pokeDict: [Int: Pokemon]) -> [Pokemon] {
+        var pokeArray = Array(pokeDict.values)
+        pokeArray.sort {
+            $0.id < $1.id
+        }
+        return pokeArray
     }
 }
 
@@ -79,7 +88,7 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(dataArray[indexPath.row])
+        //print(dataArray[indexPath.row])
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
         cell.imgURL = dataArray[indexPath.row].listingImageURL
         cell.backgroundColor = UIColor.systemRed
