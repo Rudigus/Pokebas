@@ -18,7 +18,8 @@ class ListingView: UIView {
 
     let pokemonListing: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 96, height: 96)
+        layout.itemSize = CGSize(width: PokemonCell.cellWidth, height: PokemonCell.cellHeight)
+        layout.minimumLineSpacing = CGFloat(integerLiteral: 24)
         let pokemonListing = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         pokemonListing.backgroundColor = UIColor.systemBlue
         return pokemonListing

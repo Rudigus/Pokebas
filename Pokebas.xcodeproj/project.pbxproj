@@ -25,6 +25,7 @@
 		57A7A2BB24EAB7EE0054DB86 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2BA24EAB7EE0054DB86 /* DetailView.swift */; };
 		57A7A2BD24EAB7FA0054DB86 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2BC24EAB7FA0054DB86 /* SettingsView.swift */; };
 		57B55CA224ED5F2400BFDBB0 /* PokemonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */; };
+		57B55CA424EFF59D00BFDBB0 /* String+Capitalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B55CA324EFF59D00BFDBB0 /* String+Capitalize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		57A7A2BA24EAB7EE0054DB86 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		57A7A2BC24EAB7FA0054DB86 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCell.swift; sourceTree = "<group>"; };
+		57B55CA324EFF59D00BFDBB0 /* String+Capitalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Capitalize.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				57A7A2B624EAB1370054DB86 /* Pokemon.swift */,
 				574F7F4624EAF948009D3E82 /* Type.swift */,
 				574F7F4824EAF950009D3E82 /* Stat.swift */,
+				57B55CA324EFF59D00BFDBB0 /* String+Capitalize.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				574F7F4724EAF948009D3E82 /* Type.swift in Sources */,
 				57A7A2B924EAB7C00054DB86 /* ListingView.swift in Sources */,
 				57A7A2B724EAB1370054DB86 /* Pokemon.swift in Sources */,
+				57B55CA424EFF59D00BFDBB0 /* String+Capitalize.swift in Sources */,
 				574F7F4D24EC01E9009D3E82 /* PokemonLookup.swift in Sources */,
 				57A7A28324EAA5500054DB86 /* AppDelegate.swift in Sources */,
 				574F7F4924EAF950009D3E82 /* Stat.swift in Sources */,

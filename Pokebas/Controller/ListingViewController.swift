@@ -91,8 +91,13 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
         //print(dataArray[indexPath.row])
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
         cell.imgURL = dataArray[indexPath.row].listingImageURL
+        cell.pokemonNameLabel.text = dataArray[indexPath.row].name.capitalizingFirstLetter()
         cell.backgroundColor = UIColor.systemRed
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigationController?.pushViewController(DetailViewController(pokemon: dataArray[indexPath.row]), animated: true)
     }
 
 }

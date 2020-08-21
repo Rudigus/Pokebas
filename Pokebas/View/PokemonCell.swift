@@ -10,6 +10,9 @@ import UIKit
 
 class PokemonCell: UICollectionViewCell {
 
+    static let cellWidth = 96
+    static let cellHeight = 120
+
     var imgURL: URL? {
         didSet {
             DispatchQueue.main.async {
@@ -31,14 +34,21 @@ class PokemonCell: UICollectionViewCell {
     }
 
     let pokemonImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 96, height: 96)))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 96, height: 96))
         //imageView.image = UIImage(named: "Charmander")
         return imageView
+    }()
+
+    let pokemonNameLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 96, width: 96, height: 24))
+        label.textAlignment = .center
+        return label
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(pokemonImageView)
+        addSubview(pokemonNameLabel)
     }
 
     required init?(coder: NSCoder) {
