@@ -21,7 +21,7 @@ class ListingViewController: UIViewController {
     var currentPage: Int = 1 {
         didSet {
             pokemonRequest { pokeArray in
-                self.dataArray = pokeArray
+                self.dataArray += pokeArray
             }
         }
     }
@@ -85,6 +85,9 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row + 1 == dataArray.count {
+            currentPage += 1
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
