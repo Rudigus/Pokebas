@@ -29,7 +29,7 @@ class ListingViewController: UIViewController {
     override func loadView() {
         listingView = ListingView()
         view = listingView
-        listingView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
+        listingView.backgroundColor = .pokebasLightGray
     }
 
     override func viewDidLoad() {
@@ -92,7 +92,7 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
         cell.imgURL = dataArray[indexPath.row].listingImageURL
         cell.pokemonNameLabel.text = dataArray[indexPath.row].name.capitalizingFirstLetter()
-        cell.backgroundColor = UIColor.systemRed
+        //cell.backgroundColor = UIColor.systemRed
         return cell
     }
 

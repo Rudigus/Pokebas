@@ -8,12 +8,17 @@
 
 import UIKit
 
+extension UIColor {
+    static let pokebasLightGray = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
+}
+
 class ListingView: UIView {
 
-    let searchBar: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Search"
-        return textField
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Search"
+        searchBar.backgroundImage = UIImage()
+        return searchBar
     }()
 
     let pokemonListing: UICollectionView = {
@@ -21,7 +26,10 @@ class ListingView: UIView {
         layout.itemSize = CGSize(width: PokemonCell.cellWidth, height: PokemonCell.cellHeight)
         layout.minimumLineSpacing = CGFloat(integerLiteral: 24)
         let pokemonListing = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        pokemonListing.backgroundColor = UIColor.systemBlue
+        //pokemonListing.layer.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+        //pokemonListing.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        //pokemonListing.backgroundColor = UIColor.systemBlue
+        pokemonListing.backgroundColor = .pokebasLightGray
         return pokemonListing
     }()
 
@@ -44,8 +52,8 @@ class ListingView: UIView {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 50),
-            searchBar.centerXAnchor.constraint(equalTo: centerXAnchor)
+            searchBar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
+            searchBar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5)
         ])
     }
 
