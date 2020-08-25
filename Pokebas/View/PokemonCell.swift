@@ -12,8 +12,6 @@ class PokemonCell: UICollectionViewCell {
 
     static let cellWidth = 96
     static let cellHeight = 120
-    private static let imageCache = NSCache<NSString, UIImage>()
-//    static var count = 0
 
     var imgURL: URL? {
         didSet {
@@ -25,23 +23,7 @@ class PokemonCell: UICollectionViewCell {
 
     var listingImage: UIImage? {
         guard let imgURL = imgURL else { return nil }
-
-        let image: UIImage
-
-        if let cachedImage = PokemonCell.imageCache.object(forKey: imgURL.absoluteString as NSString) {
-            image = cachedImage
-//            PokemonCell.count+=1
-//            print(PokemonCell.count)
-        } else {
-            do {
-                let data = try Data(contentsOf: imgURL)
-                image = UIImage(data: data)!
-                PokemonCell.imageCache.setObject(image, forKey: imgURL.absoluteString as NSString)
-            } catch {
-                print(error)
-                image = UIImage()
-            }
-        }
+        let image = ImageFetcher().fetchImage(from: imgURL)
         return image
     }
 

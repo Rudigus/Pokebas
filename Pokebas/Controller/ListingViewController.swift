@@ -43,6 +43,7 @@ class ListingViewController: UIViewController {
     func setupCollectionView() {
         listingView.pokemonListing.register(PokemonCell.self, forCellWithReuseIdentifier: "PokemonCell")
         listingView.pokemonListing.dataSource = self
+        listingView.pokemonListing.prefetchDataSource = self
         listingView.pokemonListing.delegate = self
     }
 
@@ -74,7 +75,7 @@ class ListingViewController: UIViewController {
     }
 }
 
-extension ListingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ListingViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDataSourcePrefetching {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -101,6 +102,15 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         navigationController?.pushViewController(DetailViewController(pokemon: dataArray[indexPath.row]), animated: true)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            let pokemon = dataArray[indexPath.row]
+            DispatchQueue.main.async {
+                _ = ImageFetcher().fetchImage(from: pokemon.listingImageURL)
+            }
+        }
     }
 
 }
