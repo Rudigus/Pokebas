@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Pokebas
 
 class PokebasUITests: XCTestCase {
 
@@ -31,6 +32,12 @@ class PokebasUITests: XCTestCase {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }*/
+
+    func testMaluca() {
+        let app = XCUIApplication()
+        app.collectionViews.cells.containing(.staticText, identifier:"Bulbasaur").children(matching: .other).element.tap()
+        app.navigationBars["Pokebas"].buttons["Pokebas"].tap()
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {

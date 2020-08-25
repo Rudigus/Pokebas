@@ -15,10 +15,11 @@
 		574F7F4924EAF950009D3E82 /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F7F4824EAF950009D3E82 /* Stat.swift */; };
 		574F7F4B24EB10AD009D3E82 /* Pokebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F7F4A24EB10AD009D3E82 /* Pokebase.swift */; };
 		574F7F4D24EC01E9009D3E82 /* PokemonLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F7F4C24EC01E9009D3E82 /* PokemonLookup.swift */; };
+		579401BB24F550EE00345349 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579401BA24F550EE00345349 /* StringTests.swift */; };
+		579401BD24F55BFC00345349 /* PokebaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579401BC24F55BFC00345349 /* PokebaseTests.swift */; };
 		57A7A28324EAA5500054DB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A28224EAA5500054DB86 /* AppDelegate.swift */; };
 		57A7A28524EAA5500054DB86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A28424EAA5500054DB86 /* SceneDelegate.swift */; };
 		57A7A28C24EAA5520054DB86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57A7A28B24EAA5520054DB86 /* Assets.xcassets */; };
-		57A7A29A24EAA5520054DB86 /* PokebasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A29924EAA5520054DB86 /* PokebasTests.swift */; };
 		57A7A2A524EAA5520054DB86 /* PokebasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2A424EAA5520054DB86 /* PokebasUITests.swift */; };
 		57A7A2B724EAB1370054DB86 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2B624EAB1370054DB86 /* Pokemon.swift */; };
 		57A7A2B924EAB7C00054DB86 /* ListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A2B824EAB7C00054DB86 /* ListingView.swift */; };
@@ -55,13 +56,14 @@
 		574F7F4824EAF950009D3E82 /* Stat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stat.swift; sourceTree = "<group>"; };
 		574F7F4A24EB10AD009D3E82 /* Pokebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokebase.swift; sourceTree = "<group>"; };
 		574F7F4C24EC01E9009D3E82 /* PokemonLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLookup.swift; sourceTree = "<group>"; };
+		579401BA24F550EE00345349 /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
+		579401BC24F55BFC00345349 /* PokebaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokebaseTests.swift; sourceTree = "<group>"; };
 		57A7A27F24EAA5500054DB86 /* Pokebas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokebas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A7A28224EAA5500054DB86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57A7A28424EAA5500054DB86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		57A7A28B24EAA5520054DB86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57A7A29024EAA5520054DB86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57A7A29524EAA5520054DB86 /* PokebasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokebasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		57A7A29924EAA5520054DB86 /* PokebasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokebasTests.swift; sourceTree = "<group>"; };
 		57A7A29B24EAA5520054DB86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57A7A2A024EAA5520054DB86 /* PokebasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokebasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A7A2A424EAA5520054DB86 /* PokebasUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokebasUITests.swift; sourceTree = "<group>"; };
@@ -136,7 +138,8 @@
 		57A7A29824EAA5520054DB86 /* PokebasTests */ = {
 			isa = PBXGroup;
 			children = (
-				57A7A29924EAA5520054DB86 /* PokebasTests.swift */,
+				579401BA24F550EE00345349 /* StringTests.swift */,
+				579401BC24F55BFC00345349 /* PokebaseTests.swift */,
 				57A7A29B24EAA5520054DB86 /* Info.plist */,
 			);
 			path = PokebasTests;
@@ -268,6 +271,7 @@
 					};
 					57A7A29424EAA5520054DB86 = {
 						CreatedOnToolsVersion = 11.6;
+						LastSwiftMigration = 1160;
 						TestTargetID = 57A7A27E24EAA5500054DB86;
 					};
 					57A7A29F24EAA5520054DB86 = {
@@ -370,7 +374,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57A7A29A24EAA5520054DB86 /* PokebasTests.swift in Sources */,
+				579401BB24F550EE00345349 /* StringTests.swift in Sources */,
+				579401BD24F55BFC00345349 /* PokebaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +558,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 828XYUZTZQ;
 				INFOPLIST_FILE = PokebasTests/Info.plist;
@@ -564,6 +570,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = rudigus.PokebasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokebas.app/Pokebas";
@@ -575,6 +582,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 828XYUZTZQ;
 				INFOPLIST_FILE = PokebasTests/Info.plist;
