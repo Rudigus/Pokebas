@@ -94,7 +94,7 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //print(dataArray[indexPath.row])
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
-        cell.imgURL = dataArray[indexPath.row].listingImageURL
+        cell.setPokemonImage(imgURL: dataArray[indexPath.row].listingImageURL)
         cell.pokemonNameLabel.text = dataArray[indexPath.row].name.capitalizingFirstLetter()
         //cell.backgroundColor = UIColor.systemRed
         return cell
@@ -105,12 +105,13 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            let pokemon = dataArray[indexPath.row]
-            DispatchQueue.main.async {
-                _ = ImageFetcher().fetchImage(from: pokemon.listingImageURL)
-            }
-        }
+//        for indexPath in indexPaths {
+//            let pokemon = dataArray[indexPath.row]
+//            _ = ImageFetcher().fetchImage(from: pokemon.listingImageURL)
+//            {
+//
+//            }
+//        }
     }
 
 }

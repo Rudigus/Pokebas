@@ -13,20 +13,6 @@ class PokemonCell: UICollectionViewCell {
     static let cellWidth = 96
     static let cellHeight = 120
 
-    var imgURL: URL? {
-        didSet {
-            DispatchQueue.main.async {
-                self.pokemonImageView.image = self.listingImage
-            }
-        }
-    }
-
-    var listingImage: UIImage? {
-        guard let imgURL = imgURL else { return nil }
-        let image = ImageFetcher().fetchImage(from: imgURL)
-        return image
-    }
-
     let pokemonImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 96, height: 96))
         //imageView.image = UIImage(named: "Charmander")
@@ -38,6 +24,14 @@ class PokemonCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
+
+    func setPokemonImage(imgURL: URL) {
+        ImageFetcher().fetchImage(from: imgURL) { image in
+            DispatchQueue.main.async {
+                self.pokemonImageView.image = image
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

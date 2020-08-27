@@ -10,5 +10,5 @@ import XCTest
 @testable import Pokebas
 
 class PokebaseTests: XCTestCase {
-    
+
 }
