@@ -11,6 +11,7 @@ import UIKit
 class ListingViewController: UIViewController {
 
     var listingView: ListingView! = nil
+
     var dataArray: [Pokemon] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -18,6 +19,7 @@ class ListingViewController: UIViewController {
             }
         }
     }
+
     var currentPage: Int = 1 {
         didSet {
             pokemonRequest { pokeArray in
@@ -94,8 +96,13 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //print(dataArray[indexPath.row])
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
-        cell.setPokemonImage(imgURL: dataArray[indexPath.row].listingImageURL)
-        cell.pokemonNameLabel.text = dataArray[indexPath.row].name.capitalizingFirstLetter()
+        if dataArray.indices.contains(indexPath.row) {
+            cell.setPokemonImage(imgURL: dataArray[indexPath.row].listingImageURL)
+            cell.pokemonNameLabel.text = dataArray[indexPath.row].name.capitalizingFirstLetter()
+        } else {
+            cell.pokemonImageView.image = nil
+            cell.pokemonNameLabel.text = nil
+        }
         //cell.backgroundColor = UIColor.systemRed
         return cell
     }

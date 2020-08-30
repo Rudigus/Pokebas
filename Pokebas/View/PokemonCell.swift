@@ -43,8 +43,9 @@ class PokemonCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepareForReuse() {
-        pokemonImageView.image = nil
-        pokemonNameLabel.text = nil
-    }
+// Prepare for Reuse should not be used to reset content.
+//    override func prepareForReuse() {
+//        pokemonImageView.image = nil
+//        pokemonNameLabel.text = nil
+//    }
 }

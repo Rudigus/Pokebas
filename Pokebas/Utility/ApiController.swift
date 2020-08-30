@@ -37,7 +37,6 @@ class ApiController {
                 group.notify(queue: .global()) {
                     completion(pokemons)
                 }
-                completion(pokemons)
             } catch {
                 print(error)
             }
