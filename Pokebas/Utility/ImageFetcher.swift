@@ -21,23 +21,13 @@ class ImageFetcher {
             completion(image)
         } else {
             let urlRequest = URLRequest(url: imgURL)
-            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            URLSession.shared.dataTask(with: urlRequest) { data, _, _ in
                 guard let data = data else { return }
                 image = UIImage(data: data)!
+                ImageFetcher.imageCache.setObject(image, forKey: imgURL.absoluteString as NSString)
                 completion(image)
             }.resume()
         }
     }
 
 }
-
-/*} else {
-    do {
-        let data = try Data(contentsOf: imgURL)
-        image = UIImage(data: data)!
-        ImageFetcher.imageCache.setObject(image, forKey: imgURL.absoluteString as NSString)
-    } catch {
-        print(error)
-        image = UIImage()
-    }
-}*/
