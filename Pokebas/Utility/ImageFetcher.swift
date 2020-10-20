@@ -24,6 +24,7 @@ class ImageFetcher {
             URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 guard let data = data else { return }
                 image = UIImage(data: data)!
+                ImageFetcher.imageCache.setObject(image, forKey: imgURL.absoluteString as NSString)
                 completion(image)
             }.resume()
         }
