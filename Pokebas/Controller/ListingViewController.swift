@@ -11,22 +11,7 @@ import UIKit
 class ListingViewController: UIViewController {
 
     var listingView: ListingView! = nil
-
-    var dataArray: [Pokemon] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.listingView.pokemonListing.reloadData()
-            }
-        }
-    }
-
-    var currentPage: Int = 1 {
-        didSet {
-            pokemonRequest { pokeArray in
-                self.dataArray += pokeArray
-            }
-        }
-    }
+    var presenter: ListingPresenterProtocol?
 
     override func loadView() {
         listingView = ListingView()
@@ -36,10 +21,9 @@ class ListingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = ListingPresenter(delegate: self)
         setupCollectionView()
-        pokemonRequest { pokeArray in
-            self.dataArray = pokeArray
-        }
+        presenter?.loadPokemons()
     }
 
     func setupCollectionView() {
@@ -47,33 +31,6 @@ class ListingViewController: UIViewController {
         listingView.pokemonListing.dataSource = self
         listingView.pokemonListing.prefetchDataSource = self
         listingView.pokemonListing.delegate = self
-    }
-
-    func pokemonRequest(completion: @escaping ([Pokemon]) -> Void) {
-
-        var pokeArray: [Pokemon] = []
-
-        let pokebase = Pokebase(pageNumber: currentPage)
-        let pokeDict = pokebase.load()
-        if !pokeDict.isEmpty {
-            pokeArray = getPokeArray(from: pokeDict)
-            completion(pokeArray)
-        } else {
-            let apiController = ApiController()
-            apiController.getPokemons(offset: (currentPage - 1) * 20) { pokeDict in
-                pokebase.save(pokeDict)
-                pokeArray = self.getPokeArray(from: pokeDict)
-                completion(pokeArray)
-            }
-        }
-    }
-
-    func getPokeArray(from pokeDict: [Int: Pokemon]) -> [Pokemon] {
-        var pokeArray = Array(pokeDict.values)
-        pokeArray.sort {
-            $0.id < $1.id
-        }
-        return pokeArray
     }
 }
 
@@ -84,21 +41,19 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataArray.count
+        return presenter?.getPokemonCount() ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row + 1 == dataArray.count {
-            currentPage += 1
-        }
+        presenter?.changePageIfNeeded(row: indexPath.row)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //print(dataArray[indexPath.row])
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
-        if dataArray.indices.contains(indexPath.row) {
-            cell.setPokemonImage(imgURL: dataArray[indexPath.row].listingImageURL)
-            cell.pokemonNameLabel.text = dataArray[indexPath.row].name.capitalizingFirstLetter()
+        if let pokemon = presenter?.getPokemon(at: indexPath.row) {
+            cell.setPokemonImage(imgURL: pokemon.listingImageURL)
+            cell.pokemonNameLabel.text = pokemon.name.capitalizingFirstLetter()
         } else {
             cell.pokemonImageView.image = nil
             cell.pokemonNameLabel.text = nil
@@ -108,7 +63,9 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        navigationController?.pushViewController(DetailViewController(pokemon: dataArray[indexPath.row]), animated: true)
+        if let pokemon = presenter?.getPokemon(at: indexPath.row) {
+            navigationController?.pushViewController(DetailViewController(pokemon: pokemon), animated: true)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
@@ -119,6 +76,14 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
 //
 //            }
 //        }
+    }
+
+}
+
+extension ListingViewController: ListingPresenterDelegate {
+
+    func renderPokemons() {
+        self.listingView.pokemonListing.reloadData()
     }
 
 }
