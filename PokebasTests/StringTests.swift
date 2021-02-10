@@ -11,7 +11,7 @@ import XCTest
 
 class StringTests: XCTestCase {
 
-    func testString_WhenStringProvided_StringShouldHaveCapitalizedFirstLetter() {
+    func test_capitalizingFirstLetter_whenStringProvided_stringShouldHaveCapitalizedFirstLetter() {
         // given
         let sut: String = "palavra"
 

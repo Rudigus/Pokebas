@@ -78,9 +78,13 @@ class ListingPresenter: ListingPresenterProtocol {
 
     }
 
+    // Changes page for API pagination feature
+    // When collection view's last cell row is the last one, you gotta load more pokemons
     func changePageIfNeeded(row: Int) {
+        // Row starts at 0, count starts at 1
         if row + 1 == dataArray.count {
             currentPage += 1
         }
     }
+
 }
