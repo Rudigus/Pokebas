@@ -30,4 +30,15 @@ class ImageFetcher {
         }
     }
 
+    func isImageCached(imgURL: URL?) -> Bool {
+        guard let imgURL = imgURL else {
+            return false
+        }
+        if ImageFetcher.imageCache.object(forKey: imgURL.absoluteString as NSString) != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+
 }

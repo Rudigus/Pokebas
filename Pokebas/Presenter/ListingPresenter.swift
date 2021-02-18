@@ -34,30 +34,28 @@ class ListingPresenter: ListingPresenterProtocol {
 
     func pokemonRequest(completion: @escaping ([Pokemon]) -> Void) {
 
-        var pokeArray: [Pokemon] = []
-
-        let pokebase = Pokebase(pageNumber: currentPage)
-        let pokeDict = pokebase.load()
-        if !pokeDict.isEmpty {
-            pokeArray = getPokeArray(from: pokeDict)
+        let pokeArray = CoreDataStack.shared.load(pageNumber: currentPage)
+        if !pokeArray.isEmpty {
+            //print("Fetching from Core Data")
+            //print(pokeArray.map { $0.id })
             completion(pokeArray)
         } else {
+            //print("Fetching from API")
             let apiController = ApiController()
-            apiController.getPokemons(offset: (currentPage - 1) * 20) { pokeDict in
-                pokebase.save(pokeDict)
-                pokeArray = self.getPokeArray(from: pokeDict)
-                completion(pokeArray)
+            apiController.getPokemons(offset: (currentPage - 1) * 20) { pokeArray in
+                CoreDataStack.shared.save()
+                completion(pokeArray.sorted(by: {$0.id < $1.id}))
             }
         }
     }
 
-    func getPokeArray(from pokeDict: [Int: Pokemon]) -> [Pokemon] {
-        var pokeArray = Array(pokeDict.values)
-        pokeArray.sort {
-            $0.id < $1.id
-        }
-        return pokeArray
-    }
+//    func getPokeArray(from pokeDict: [Int: Pokemon]) -> [Pokemon] {
+//        var pokeArray = Array(pokeDict.values)
+//        pokeArray.sort {
+//            $0.id < $1.id
+//        }
+//        return pokeArray
+//    }
 
     func loadPokemons() {
         pokemonRequest { pokeArray in

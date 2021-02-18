@@ -10,7 +10,7 @@ import Foundation
 
 class ApiController {
 
-    func getPokemons(limit: Int = 20, offset: Int = 0, completion: @escaping ([Int: Pokemon]) -> Void) {
+    func getPokemons(limit: Int = 20, offset: Int = 0, completion: @escaping ([Pokemon]) -> Void) {
         // Building the request
         let pokemonsURL = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=\(limit)&offset=\(offset)")!
         var pokemonsRequest = URLRequest(url: pokemonsURL)
@@ -23,14 +23,15 @@ class ApiController {
             guard let data = data else { return }
             do {
                 let group = DispatchGroup()
+                // Default JSONDecoder is fine for this one. It is not linked to Core Data
                 let pokemonLookup = try JSONDecoder().decode(PokemonLookup.self, from: data)
-                var pokemons: [Int: Pokemon] = [:]
+                var pokemons: [Pokemon] = []
                 for pokemonEntry in pokemonLookup.results {
                     //print(pokemonEntry.url)
                     group.enter()
                     self.getPokemon(withURL: pokemonEntry.url) { pokemon in
                         //print(pokemon)
-                        pokemons[pokemon.id] = pokemon
+                        pokemons.append(pokemon)
                         group.leave()
                     }
                 }
@@ -56,7 +57,9 @@ class ApiController {
             //print(error)
             guard let data = data else { return }
             do {
-                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataStack.shared.managedContext
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(pokemon)
             } catch {
                 print(error)
@@ -76,7 +79,9 @@ class ApiController {
             //print(error)
             guard let data = data else { return }
             do {
-                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.userInfo[CodingUserInfoKey.managedObjectContext] = CoreDataStack.shared.managedContext
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(pokemon)
             } catch {
                 print(error)

@@ -15,6 +15,7 @@ class PokemonCell: UICollectionViewCell {
 
     let pokemonImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 96, height: 96))
+        //imageView.backgroundColor = .red
         //imageView.image = UIImage(named: "Charmander")
         return imageView
     }()
@@ -25,10 +26,21 @@ class PokemonCell: UICollectionViewCell {
         return label
     }()
 
-    func setPokemonImage(imgURL: URL) {
+    func setPokemonImage(imgURL: URL?) {
+        guard let imgURL = imgURL else {
+            return
+        }
         ImageFetcher().fetchImage(from: imgURL) { image in
             DispatchQueue.main.async {
-                self.pokemonImageView.image = image
+                if self.pokemonImageView.image != nil {
+                    UIView.transition(with: self.pokemonImageView,
+                                  duration: 0.5,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.pokemonImageView.image = image },
+                                  completion: nil)
+                } else {
+                    self.pokemonImageView.image = image
+                }
             }
         }
     }

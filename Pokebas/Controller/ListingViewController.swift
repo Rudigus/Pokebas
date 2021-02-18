@@ -50,10 +50,16 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //print(dataArray[indexPath.row])
+        // This would only fail if the setup was wrong
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
         if let pokemon = presenter?.getPokemon(at: indexPath.row) {
+            if !ImageFetcher().isImageCached(imgURL: pokemon.listingImageURL) {
+                cell.pokemonImageView.image = UIImage(named: "Silhouette")
+            } else {
+                cell.pokemonImageView.image = nil
+            }
+            cell.pokemonNameLabel.text = pokemon.name?.capitalizingFirstLetter()
             cell.setPokemonImage(imgURL: pokemon.listingImageURL)
-            cell.pokemonNameLabel.text = pokemon.name.capitalizingFirstLetter()
         } else {
             cell.pokemonImageView.image = nil
             cell.pokemonNameLabel.text = nil

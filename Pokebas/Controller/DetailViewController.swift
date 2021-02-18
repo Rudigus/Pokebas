@@ -35,7 +35,7 @@ class DetailViewController: UIViewController {
 
     func setupDetailView() {
         detailView.idLabel.text = "#\(pokemon!.id)"
-        detailView.nameLabel.text = pokemon?.name.capitalizingFirstLetter()
+        detailView.nameLabel.text = pokemon?.name?.capitalizingFirstLetter()
     }
 
 }
