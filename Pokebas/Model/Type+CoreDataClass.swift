@@ -10,11 +10,11 @@
 import Foundation
 import CoreData
 
-//enum TypeEnum: String {
-//    case normal, fire, fighting, water, flying, grass, poison, electric, ground,
-//    psychic, rock, ice, bug, dragon, ghost, dark, steel, fairy, unknown
-//}
-//
+enum TypeEnum: String {
+    case normal, fire, fighting, water, flying, grass, poison, electric, ground,
+    psychic, rock, ice, bug, dragon, ghost, dark, steel, fairy, unknown
+}
+
 //extension TypeEnum: Codable {
 //    public init(from decoder: Decoder) throws {
 //        self = try TypeEnum(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown

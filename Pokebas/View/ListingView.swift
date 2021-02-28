@@ -8,10 +8,6 @@
 
 import UIKit
 
-extension UIColor {
-    static let pokebasLightGray = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
-}
-
 class ListingView: UIView {
 
     let searchBar: UISearchBar = {

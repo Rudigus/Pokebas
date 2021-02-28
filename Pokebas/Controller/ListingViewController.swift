@@ -54,7 +54,7 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
         let cell = listingView.pokemonListing.dequeueReusableCell(withReuseIdentifier: "PokemonCell", for: indexPath) as! PokemonCell
         if let pokemon = presenter?.getPokemon(at: indexPath.row) {
             if !ImageFetcher().isImageCached(imgURL: pokemon.listingImageURL) {
-                cell.pokemonImageView.image = UIImage(named: "Silhouette")
+                cell.pokemonImageView.image = UIImage()
             } else {
                 cell.pokemonImageView.image = nil
             }
