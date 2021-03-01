@@ -11,8 +11,9 @@ import Foundation
 class ListingPresenter: ListingPresenterProtocol {
 
     weak var delegate: ListingPresenterDelegate?
+    var queryMode = false
 
-    var dataArray: [Pokemon] = [] {
+    private var dataArray: [Pokemon] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.delegate?.renderPokemons()
@@ -22,7 +23,7 @@ class ListingPresenter: ListingPresenterProtocol {
 
     var currentPage: Int = 1 {
         didSet {
-            pokemonRequest { pokeArray in
+            pokemonRequest(page: currentPage) { pokeArray in
                 self.dataArray += pokeArray
             }
         }
@@ -32,9 +33,9 @@ class ListingPresenter: ListingPresenterProtocol {
         self.delegate = delegate
     }
 
-    func pokemonRequest(completion: @escaping ([Pokemon]) -> Void) {
+    private func pokemonRequest(page: Int, completion: @escaping ([Pokemon]) -> Void) {
 
-        let pokeArray = CoreDataStack.shared.load(pageNumber: currentPage)
+        let pokeArray = CoreDataStack.shared.load(pageNumber: page)
         if !pokeArray.isEmpty {
             //print("Fetching from Core Data")
             //print(pokeArray.map { $0.id })
@@ -42,7 +43,7 @@ class ListingPresenter: ListingPresenterProtocol {
         } else {
             //print("Fetching from API")
             let apiController = ApiController()
-            apiController.getPokemons(offset: (currentPage - 1) * 20) { pokeArray in
+            apiController.getPokemons(offset: (page - 1) * 20) { pokeArray in
                 CoreDataStack.shared.save()
                 completion(pokeArray.sorted(by: {$0.id < $1.id}))
             }
@@ -58,8 +59,14 @@ class ListingPresenter: ListingPresenterProtocol {
 //    }
 
     func loadPokemons() {
-        pokemonRequest { pokeArray in
+        pokemonRequest(page: currentPage) { pokeArray in
             self.dataArray = pokeArray
+        }
+    }
+
+    func loadPreviousPagePokemons(forPage page: Int) {
+        pokemonRequest(page: page) { pokeArray in
+            self.dataArray = pokeArray + self.dataArray
         }
     }
 
@@ -80,9 +87,21 @@ class ListingPresenter: ListingPresenterProtocol {
     // When collection view's last cell row is the last one, you gotta load more pokemons
     func changePageIfNeeded(row: Int) {
         // Row starts at 0, count starts at 1
-        if row + 1 == dataArray.count {
+        if row + 1 == dataArray.count && !queryMode {
             currentPage += 1
         }
+    }
+
+    func performPokemonNameQuery(queryString: String) {
+        if queryString == "" {
+            queryMode = false
+            currentPage = 1
+            loadPokemons()
+        } else {
+            queryMode = true
+            self.dataArray = CoreDataStack.shared.load(queryString: queryString)
+        }
+        self.delegate?.scrollCollectionToTop()
     }
 
 }

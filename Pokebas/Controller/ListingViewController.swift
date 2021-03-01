@@ -23,6 +23,7 @@ class ListingViewController: UIViewController {
         super.viewDidLoad()
         presenter = ListingPresenter(delegate: self)
         setupCollectionView()
+        setupSearchBar()
         presenter?.loadPokemons()
     }
 
@@ -31,6 +32,20 @@ class ListingViewController: UIViewController {
         listingView.pokemonListing.dataSource = self
         listingView.pokemonListing.prefetchDataSource = self
         listingView.pokemonListing.delegate = self
+    }
+
+    func setupSearchBar() {
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(hasSwipedDown))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+        swipeDown.delegate = self
+        listingView.searchBar.delegate = self
+    }
+
+    @objc func hasSwipedDown() {
+        if self.listingView.searchBar.isFirstResponder {
+            self.listingView.searchBar.resignFirstResponder()
+        }
     }
 }
 
@@ -86,10 +101,30 @@ extension ListingViewController: UICollectionViewDataSource, UICollectionViewDel
 
 }
 
+extension ListingViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.performPokemonNameQuery(queryString: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+}
+
 extension ListingViewController: ListingPresenterDelegate {
 
     func renderPokemons() {
         self.listingView.pokemonListing.reloadData()
     }
 
+    func scrollCollectionToTop() {
+        self.listingView.pokemonListing.setContentOffset(CGPoint.zero, animated: false)
+    }
+
+}
+
+extension ListingViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+            return true
+    }
 }

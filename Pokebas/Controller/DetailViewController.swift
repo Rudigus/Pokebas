@@ -80,7 +80,7 @@ class DetailViewController: UIViewController {
             if let firstTypeEnum = TypeEnum(rawValue: firstType.name ?? "unknown"), let secondTypeEnum = TypeEnum(rawValue: secondType.name ?? "unknown") {
                 gradient.colors = [UIColor.typeColors[firstTypeEnum]?.withAlphaComponent(0.5).cgColor, UIColor.typeColors[secondTypeEnum]?.withAlphaComponent(0.5).cgColor]
                 gradient.locations = [0.0 , 1.0]
-                gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+                gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
                 gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
                 gradient.frame = self.view.bounds
 

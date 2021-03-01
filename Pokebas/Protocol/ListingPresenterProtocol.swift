@@ -10,11 +10,14 @@ import Foundation
 
 protocol ListingPresenterProtocol: AnyObject {
     func loadPokemons()
+    func loadPreviousPagePokemons(forPage page: Int)
     func getPokemonCount() -> Int
     func getPokemon(at row: Int) -> Pokemon?
     func changePageIfNeeded(row: Int)
+    func performPokemonNameQuery(queryString: String)
 }
 
 protocol ListingPresenterDelegate: AnyObject {
     func renderPokemons()
+    func scrollCollectionToTop()
 }

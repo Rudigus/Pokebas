@@ -71,4 +71,18 @@ class CoreDataStack {
             return []
         }
     }
+
+    func load(queryString: String) -> [Pokemon] {
+        let predicate = NSPredicate(format: "name BEGINSWITH[cd] %@", queryString)
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        let fetchRequest = NSFetchRequest<Pokemon>(entityName: "Pokemon")
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        do {
+            let pokemons = try managedContext.fetch(fetchRequest)
+            return pokemons
+        } catch {
+            return []
+        }
+    }
 }

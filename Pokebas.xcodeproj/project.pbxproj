@@ -22,6 +22,8 @@
 		57848B3525D1829800689373 /* ListingPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57848B3425D1829800689373 /* ListingPresenterProtocol.swift */; };
 		57848B3D25D2CF3900689373 /* ListingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57848B3C25D2CF3900689373 /* ListingPresenterTests.swift */; };
 		57848B4225D4182300689373 /* PokemonMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57848B4125D4182300689373 /* PokemonMockData.swift */; };
+		578BABCC25EC04BD004C4096 /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578BABCB25EC04BD004C4096 /* DownloadView.swift */; };
+		578BABD125EC04D2004C4096 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578BABD025EC04D2004C4096 /* DownloadViewController.swift */; };
 		579401BB24F550EE00345349 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579401BA24F550EE00345349 /* StringTests.swift */; };
 		579401BD24F55BFC00345349 /* PokebaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579401BC24F55BFC00345349 /* PokebaseTests.swift */; };
 		57A7A28324EAA5500054DB86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7A28224EAA5500054DB86 /* AppDelegate.swift */; };
@@ -81,6 +83,8 @@
 		57848B3425D1829800689373 /* ListingPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingPresenterProtocol.swift; sourceTree = "<group>"; };
 		57848B3C25D2CF3900689373 /* ListingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingPresenterTests.swift; sourceTree = "<group>"; };
 		57848B4125D4182300689373 /* PokemonMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonMockData.swift; sourceTree = "<group>"; };
+		578BABCB25EC04BD004C4096 /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
+		578BABD025EC04D2004C4096 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		579401BA24F550EE00345349 /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		579401BC24F55BFC00345349 /* PokebaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokebaseTests.swift; sourceTree = "<group>"; };
 		57A7A27F24EAA5500054DB86 /* Pokebas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokebas.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +160,15 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		578BABD525EC04EC004C4096 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				57A7A28224EAA5500054DB86 /* AppDelegate.swift */,
+				57A7A28424EAA5500054DB86 /* SceneDelegate.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		57A7A27624EAA5500054DB86 = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +192,7 @@
 		57A7A28124EAA5500054DB86 /* Pokebas */ = {
 			isa = PBXGroup;
 			children = (
+				578BABD525EC04EC004C4096 /* Shared */,
 				57F1D8C025DD552700FE7ACA /* Extension */,
 				57848B3325D1828700689373 /* Protocol */,
 				57A7A2B424EAB0EE0054DB86 /* View */,
@@ -238,6 +252,7 @@
 				57A7A2B824EAB7C00054DB86 /* ListingView.swift */,
 				57A7A2BA24EAB7EE0054DB86 /* DetailView.swift */,
 				57A7A2BC24EAB7FA0054DB86 /* SettingsView.swift */,
+				578BABCB25EC04BD004C4096 /* DownloadView.swift */,
 				57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */,
 				57376AA325D74D2B00F2D337 /* Launch Screen.storyboard */,
 			);
@@ -250,8 +265,7 @@
 				574F7F3E24EAC26F009D3E82 /* ListingViewController.swift */,
 				574F7F4024EAC27C009D3E82 /* DetailViewController.swift */,
 				574F7F4224EAC28C009D3E82 /* SettingsViewController.swift */,
-				57A7A28224EAA5500054DB86 /* AppDelegate.swift */,
-				57A7A28424EAA5500054DB86 /* SceneDelegate.swift */,
+				578BABD025EC04D2004C4096 /* DownloadViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -431,10 +445,12 @@
 			files = (
 				574F7F4124EAC27C009D3E82 /* DetailViewController.swift in Sources */,
 				57A7A2BD24EAB7FA0054DB86 /* SettingsView.swift in Sources */,
+				578BABD125EC04D2004C4096 /* DownloadViewController.swift in Sources */,
 				574F7F4524EAC8E1009D3E82 /* ApiController.swift in Sources */,
 				57E3D2D825DD53200081A008 /* Type+CoreDataProperties.swift in Sources */,
 				57E3D2D325DD53200081A008 /* Stat+CoreDataClass.swift in Sources */,
 				57F1D8CA25DD562800FE7ACA /* DecoderConfigurationError.swift in Sources */,
+				578BABCC25EC04BD004C4096 /* DownloadView.swift in Sources */,
 				57E9F41524F477BD00022771 /* ImageFetcher.swift in Sources */,
 				574F7F4B24EB10AD009D3E82 /* Pokebase.swift in Sources */,
 				574F7F4324EAC28C009D3E82 /* SettingsViewController.swift in Sources */,
