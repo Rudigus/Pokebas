@@ -28,11 +28,30 @@ extension UIColor {
         TypeEnum.ghost: #colorLiteral(red: 0.4509803922, green: 0.3411764706, blue: 0.5921568627, alpha: 1),
         TypeEnum.dark: #colorLiteral(red: 0.4392156863, green: 0.3411764706, blue: 0.2745098039, alpha: 1),
         TypeEnum.steel: #colorLiteral(red: 0.7176470588, green: 0.7176470588, blue: 0.8078431373, alpha: 1),
-        TypeEnum.fairy: #colorLiteral(red: 0.8392156863, green: 0.5215686275, blue: 0.6784313725, alpha: 1),
-        TypeEnum.unknown: .clear
+        TypeEnum.fairy: #colorLiteral(red: 0.8392156863, green: 0.5215686275, blue: 0.6784313725, alpha: 1)
     ]
 
-    static let pokebasLightGray = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
+    static let pokebasLightGray = UIColor { traitCollection in
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
+            return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        default:
+            return #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        }
+    }
+
+    static func color(for type: Type, customAlpha: CGFloat? = nil) -> UIColor? {
+        guard let typeName = type.name, let typeEnum = TypeEnum(rawValue: typeName) else {
+            return nil
+        }
+        var color = UIColor.typeColors[typeEnum]
+        if let customAlpha = customAlpha {
+            color = color?.withAlphaComponent(customAlpha)
+        }
+        return color
+    }
+
+//    static let pokebasLightGray = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
 //    static let radarChartBorder = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.5921568627, alpha: 1)
 //    static let radarChartFill = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)
 }

@@ -13,7 +13,7 @@ class DetailViewController: UIViewController {
     var detailView: DetailView! = nil
     var pokemon: Pokemon?
     var segmentedControlViews: [(view: UIView, segmentIndex: Int)] = []
-    var gradient: CAGradientLayer?
+    var gradient: CAGradientLayer = CAGradientLayer()
 
     init(pokemon: Pokemon) {
         super.init(nibName: nil, bundle: nil)
@@ -27,19 +27,18 @@ class DetailViewController: UIViewController {
     override func loadView() {
         detailView = DetailView()
         view = detailView
-        detailView.backgroundColor = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
+        detailView.backgroundColor = UIColor.pokebasLightGray
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         //navigationItem.largeTitleDisplayMode = .never
-        loadDrawingImage()
         setupDetailView()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        gradient?.frame = detailView.drawingBackgroundView.bounds
+        gradient.frame = detailView.drawingBackgroundView.bounds
     }
 
     func loadDrawingImage() {
@@ -70,28 +69,41 @@ class DetailViewController: UIViewController {
         guard let pokemon = pokemon else {
             return
         }
+        // Drawing Image View
+        loadDrawingImage()
+        // Drawing Background View
         let firstType = pokemon.types.filter {$0.slot == 1}.first!
+        var typeColors: (firstColor: UIColor, secondColor: UIColor?)?
         if pokemon.types.count == 2 {
             let secondType = pokemon.types.filter {$0.slot == 2}.first!
-            gradient = CAGradientLayer()
-            guard let gradient = gradient else {
-                return
-            }
-            if let firstTypeEnum = TypeEnum(rawValue: firstType.name ?? "unknown"), let secondTypeEnum = TypeEnum(rawValue: secondType.name ?? "unknown") {
-                gradient.colors = [UIColor.typeColors[firstTypeEnum]?.withAlphaComponent(0.5).cgColor, UIColor.typeColors[secondTypeEnum]?.withAlphaComponent(0.5).cgColor]
+            if let firstColor = UIColor.color(for: firstType, customAlpha: 0.5), let secondColor = UIColor.color(for: secondType, customAlpha: 0.5) {
+                typeColors = (firstColor: firstColor, secondColor: secondColor)
+                gradient.colors = [firstColor.cgColor, secondColor.cgColor]
                 gradient.locations = [0.0 , 1.0]
                 gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
                 gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
                 gradient.frame = self.view.bounds
-
-                detailView.drawingBackgroundView.layer.addSublayer(gradient)
             }
+            detailView.drawingBackgroundView.layer.addSublayer(gradient)
         } else {
-            detailView.drawingBackgroundView.backgroundColor = UIColor.typeColors[TypeEnum(rawValue: firstType.name ?? "unknown") ?? TypeEnum.unknown]
-            detailView.drawingBackgroundView.backgroundColor = detailView.drawingBackgroundView.backgroundColor?.withAlphaComponent(0.5)
+            if let color = UIColor.color(for: firstType) {
+                typeColors = (firstColor: color, secondColor: nil)
+                detailView.drawingBackgroundView.backgroundColor = color
+            }
         }
+        // ID Label
         detailView.idLabel.text = "#\(pokemon.id)"
+        // Name Label
         detailView.nameLabel.text = pokemon.name?.capitalizingFirstLetter()
+        // Type Stack View
+        detailView.firstType.color = typeColors?.firstColor
+        if pokemon.types.count == 2 {
+            detailView.secondType.color = typeColors?.secondColor
+        } else {
+            detailView.typeStackView.removeArrangedSubview(detailView.secondType)
+            detailView.secondType.removeFromSuperview()
+        }
+        // Section Control
         detailView.sectionControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
 //        segmentedControlViews = [
 //

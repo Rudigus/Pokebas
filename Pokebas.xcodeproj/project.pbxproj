@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5727B2A825EC9B1B00D3667F /* TypeRoundedRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727B2A725EC9B1B00D3667F /* TypeRoundedRect.swift */; };
 		57376AA425D74D2B00F2D337 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57376AA325D74D2B00F2D337 /* Launch Screen.storyboard */; };
 		574F7F3F24EAC26F009D3E82 /* ListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F7F3E24EAC26F009D3E82 /* ListingViewController.swift */; };
 		574F7F4124EAC27C009D3E82 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F7F4024EAC27C009D3E82 /* DetailViewController.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5727B2A725EC9B1B00D3667F /* TypeRoundedRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeRoundedRect.swift; sourceTree = "<group>"; };
 		57376AA325D74D2B00F2D337 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		574F7F3E24EAC26F009D3E82 /* ListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewController.swift; sourceTree = "<group>"; };
 		574F7F4024EAC27C009D3E82 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				578BABCB25EC04BD004C4096 /* DownloadView.swift */,
 				57B55CA124ED5F2400BFDBB0 /* PokemonCell.swift */,
 				57376AA325D74D2B00F2D337 /* Launch Screen.storyboard */,
+				5727B2A725EC9B1B00D3667F /* TypeRoundedRect.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				57F1D8D125DD5A8400FE7ACA /* Pokemon+CoreDataProperties.swift in Sources */,
 				57D1F15A25EB2ADD00A39916 /* UIColorExtension.swift in Sources */,
 				57B55CA224ED5F2400BFDBB0 /* PokemonCell.swift in Sources */,
+				5727B2A825EC9B1B00D3667F /* TypeRoundedRect.swift in Sources */,
 				57A7A2BB24EAB7EE0054DB86 /* DetailView.swift in Sources */,
 				574F7F4724EAF948009D3E82 /* Type.swift in Sources */,
 				57A7A2B924EAB7C00054DB86 /* ListingView.swift in Sources */,
@@ -636,6 +640,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 828XYUZTZQ;
 				INFOPLIST_FILE = Pokebas/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -654,6 +659,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 828XYUZTZQ;
 				INFOPLIST_FILE = Pokebas/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

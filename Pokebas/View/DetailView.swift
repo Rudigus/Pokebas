@@ -31,6 +31,25 @@ class DetailView: UIView {
         return label
     }()
 
+    var typeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalCentering
+        stackView.alignment = .center
+        stackView.spacing = 50
+        return stackView
+    }()
+
+    var firstType: TypeRoundedRect = {
+        let rect = TypeRoundedRect()
+        return rect
+    }()
+
+    var secondType: TypeRoundedRect = {
+        let rect = TypeRoundedRect()
+        return rect
+    }()
+
     var sectionControl: UISegmentedControl = {
         let sections = ["About", "Stats", "Evolution"]
         let segmentedControl = UISegmentedControl(items: sections)
@@ -79,6 +98,7 @@ class DetailView: UIView {
         setupDrawingImageView()
         setupIDLabel()
         setupNameLabel()
+        setupTypeStackView()
         setupSectionControl()
 //        setupRadarChart()
     }
@@ -126,11 +146,23 @@ class DetailView: UIView {
         ])
     }
 
+    func setupTypeStackView() {
+        typeStackView.addArrangedSubview(firstType)
+        typeStackView.addArrangedSubview(secondType)
+        addSubview(typeStackView)
+        typeStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            typeStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
+            typeStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+        firstType.translatesAutoresizingMaskIntoConstraints = false
+    }
+
     func setupSectionControl() {
         addSubview(sectionControl)
         sectionControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            sectionControl.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 50),
+            sectionControl.topAnchor.constraint(equalTo: typeStackView.bottomAnchor, constant: 20),
             sectionControl.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
