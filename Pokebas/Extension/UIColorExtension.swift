@@ -40,8 +40,8 @@ extension UIColor {
         }
     }
 
-    static func color(for type: Type, customAlpha: CGFloat? = nil) -> UIColor? {
-        guard let typeName = type.name, let typeEnum = TypeEnum(rawValue: typeName) else {
+    static func getColor(for type: Type?, customAlpha: CGFloat? = nil) -> UIColor? {
+        guard let typeName = type?.name, let typeEnum = TypeEnum(rawValue: typeName) else {
             return nil
         }
         var color = UIColor.typeColors[typeEnum]
@@ -51,7 +51,17 @@ extension UIColor {
         return color
     }
 
-//    static let pokebasLightGray = UIColor(red: 245 / 255, green: 245 / 255, blue: 245 / 255, alpha: 1.0)
-//    static let radarChartBorder = #colorLiteral(red: 0.5921568627, green: 0.5921568627, blue: 0.5921568627, alpha: 1)
-//    static let radarChartFill = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)
+    func changeColor(hue: CGFloat? = nil, saturation: CGFloat? = nil, brightness: CGFloat? = nil, alpha: CGFloat? = nil) -> UIColor? {
+        var originalHue: CGFloat = 0
+        var originalSaturation: CGFloat = 0
+        var originalBrightness: CGFloat = 0
+        var originalAlpha: CGFloat = 0
+        if self.getHue(&originalHue, saturation: &originalSaturation, brightness: &originalBrightness, alpha: &originalAlpha) {
+            let color = UIColor(hue: hue ?? originalHue, saturation: saturation ?? originalSaturation, brightness: brightness ?? originalBrightness, alpha: alpha ?? originalAlpha)
+            return color
+        } else {
+            return nil
+        }
+    }
+
 }

@@ -10,10 +10,15 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    enum ReuseIdentifier: String {
+        case drawingViewCell, idViewCell, nameViewCell, typeStackViewCell
+    }
+
     var detailView: DetailView! = nil
     var pokemon: Pokemon?
-    var segmentedControlViews: [(view: UIView, segmentIndex: Int)] = []
     var gradient: CAGradientLayer = CAGradientLayer()
+    var types: (firstType: Type, secondType: Type?)?
+    var typeColors: (firstColor: UIColor, secondColor: UIColor?)?
 
     init(pokemon: Pokemon) {
         super.init(nibName: nil, bundle: nil)
@@ -32,82 +37,137 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //navigationItem.largeTitleDisplayMode = .never
-        setupDetailView()
+        navigationItem.largeTitleDisplayMode = .never
+        setTypeColors()
+        setupNavigationBar()
+        setupTableView()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isTranslucent = true
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        gradient.frame = detailView.drawingBackgroundView.bounds
+        //gradient.frame = detailView.drawingBackgroundView.bounds
     }
 
-    func loadDrawingImage() {
-        if let pokemonID = pokemon?.id, let url = URL(string: "https://pokeres.bastionbot.org/images/pokemon/\(pokemonID).png") {
-            ImageFetcher().fetchImage(from: url) { image in
-                DispatchQueue.main.async {
-                    UIView.transition(with: self.detailView.drawingImageView,
-                                      duration: 0.5,
-                                  options: .transitionCrossDissolve,
-                                  animations: { self.detailView.drawingImageView.image = image },
-                                  completion: nil)
-                }
-            }
-        }
-    }
-
-    @objc func segmentChanged(sender: UISegmentedControl) {
-        for segmentView in segmentedControlViews {
-            if sender.selectedSegmentIndex == segmentView.segmentIndex {
-                segmentView.view.isHidden = false
-            } else {
-                segmentView.view.isHidden = true
-            }
-        }
-    }
-
-    func setupDetailView() {
+    func setTypeColors() {
         guard let pokemon = pokemon else {
             return
         }
-        // Drawing Image View
-        loadDrawingImage()
-        // Drawing Background View
         let firstType = pokemon.types.filter {$0.slot == 1}.first!
-        var typeColors: (firstColor: UIColor, secondColor: UIColor?)?
-        if pokemon.types.count == 2 {
-            let secondType = pokemon.types.filter {$0.slot == 2}.first!
-            if let firstColor = UIColor.color(for: firstType, customAlpha: 0.5), let secondColor = UIColor.color(for: secondType, customAlpha: 0.5) {
-                typeColors = (firstColor: firstColor, secondColor: secondColor)
+        let secondType = pokemon.types.filter {$0.slot == 2}.first
+        types = (firstType: firstType, secondType: secondType)
+        typeColors = (firstColor: UIColor.getColor(for: firstType)!, secondColor: UIColor.getColor(for: secondType))
+    }
+
+    func setupTableView() {
+        detailView.tableView.delegate = self
+        detailView.tableView.dataSource = self
+
+        detailView.tableView.register(DrawingViewCell.self, forCellReuseIdentifier: ReuseIdentifier.drawingViewCell.rawValue)
+        detailView.tableView.register(IDViewCell.self, forCellReuseIdentifier: ReuseIdentifier.idViewCell.rawValue)
+        detailView.tableView.register(NameViewCell.self, forCellReuseIdentifier: ReuseIdentifier.nameViewCell.rawValue)
+        detailView.tableView.register(TypeStackViewCell.self, forCellReuseIdentifier: ReuseIdentifier.typeStackViewCell.rawValue)
+    }
+
+    func setupNavigationBar() {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = .pokebasLightGray
+        var tintColor: UIColor?
+        guard let typeColors = typeColors else {
+            return
+        }
+        if self.traitCollection.userInterfaceStyle == .dark {
+            tintColor = typeColors.firstColor.changeColor(saturation: 0.35, brightness: 0.9)
+        } else {
+            tintColor = typeColors.firstColor.changeColor(saturation: 0.7, brightness: 0.6)
+        }
+        self.navigationController?.navigationBar.tintColor = tintColor
+    }
+}
+
+extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Height + UIEdgeInsets.top
+        switch indexPath.row {
+        case 0:
+            return 190
+        case 1:
+            return 50
+        case 2:
+            return 50
+        case 3:
+            return 38
+        default:
+            return 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let emptyCell = UITableViewCell()
+        guard let pokemon = pokemon else {
+            return emptyCell
+        }
+        switch indexPath.row {
+        // Drawing View Cell
+        case 0:
+            let cell = detailView.tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.drawingViewCell.rawValue, for: indexPath) as! DrawingViewCell
+            cell.loadDrawingImage(pokemon: pokemon)
+            guard let firstColor = typeColors?.firstColor else {
+                return emptyCell
+            }
+            if pokemon.types.count == 2 {
+                guard let secondColor = typeColors?.secondColor else {
+                    return emptyCell
+                }
                 gradient.colors = [firstColor.cgColor, secondColor.cgColor]
                 gradient.locations = [0.0 , 1.0]
                 gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
                 gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-                gradient.frame = self.view.bounds
+                gradient.frame = cell.bounds
+                cell.drawingBackgroundView.layer.addSublayer(gradient)
+            } else {
+                cell.drawingBackgroundView.backgroundColor = firstColor
             }
-            detailView.drawingBackgroundView.layer.addSublayer(gradient)
-        } else {
-            if let color = UIColor.color(for: firstType) {
-                typeColors = (firstColor: color, secondColor: nil)
-                detailView.drawingBackgroundView.backgroundColor = color
+            return cell
+        // ID View Cell
+        case 1:
+            let cell = detailView.tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.idViewCell.rawValue, for: indexPath) as! IDViewCell
+            cell.backgroundColor = .pokebasLightGray
+            cell.idLabel.text = "#\(pokemon.id)"
+            return cell
+        // Name View Cell
+        case 2:
+            let cell = detailView.tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.nameViewCell.rawValue, for: indexPath) as! NameViewCell
+            cell.backgroundColor = .pokebasLightGray
+            cell.nameLabel.text = pokemon.name?.capitalizingFirstLetter()
+            return cell
+        // Type Stack View Cell
+        case 3:
+            let cell = detailView.tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.typeStackViewCell.rawValue, for: indexPath) as! TypeStackViewCell
+            cell.backgroundColor = .pokebasLightGray
+            guard let types = types else {
+                return emptyCell
             }
+            cell.firstType.backgroundColor = typeColors?.firstColor
+            cell.firstType.typeName.text = types.firstType.name?.capitalizingFirstLetter()
+            if pokemon.types.count == 2 {
+                cell.secondType.backgroundColor = typeColors?.secondColor
+                cell.secondType.typeName.text = types.secondType!.name?.capitalizingFirstLetter()
+            } else {
+                cell.typeStackView.removeArrangedSubview(cell.secondType)
+                cell.secondType.removeFromSuperview()
+            }
+            return cell
+        default:
+            return UITableViewCell()
         }
-        // ID Label
-        detailView.idLabel.text = "#\(pokemon.id)"
-        // Name Label
-        detailView.nameLabel.text = pokemon.name?.capitalizingFirstLetter()
-        // Type Stack View
-        detailView.firstType.color = typeColors?.firstColor
-        if pokemon.types.count == 2 {
-            detailView.secondType.color = typeColors?.secondColor
-        } else {
-            detailView.typeStackView.removeArrangedSubview(detailView.secondType)
-            detailView.secondType.removeFromSuperview()
-        }
-        // Section Control
-        detailView.sectionControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
-//        segmentedControlViews = [
-//
-//        ]
     }
-
 }
